@@ -1,0 +1,4 @@
+fastapi==0.63.0
+geoip2==4.1.0
+grpcio==1.36.1
+grpcio-tools==1.36.1
