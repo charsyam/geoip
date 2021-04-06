@@ -8,29 +8,14 @@ import geoip2.database
 import geoip2
 
 
-def get_city(ip: str):
-    try:
-        resp = reader.city(ip)
-        return {"code": 0,  "ip": ip,
-                "country": resp.country.iso_code, "city": resp.city.name,
-                "latitude": resp.location.latitude, "longitude": resp.location.longitude}
-    except geoip2.errors.AddressNotFoundError:
-        raise UnicornException(status=404, code=-20000, message=str(e))
-    except Exception as e:
-        raise UnicornException(status=400, code=-20000, message=str(e))
-
-
 class GeoIpServiceServicer(geoip_pb2_grpc.GeoIpServiceServicer):
     def __init__(self):
-        self.reader = geoip2.database.Reader('../mmdb/geo2lite.mmdb')
+        self.reader = geoip2.database.Reader('../mmdb/GeoLite2-Country.mmdb')
 
-    def getCity(self, request, context):
-        resp = self.reader.city(request.ip)
+    def getCountry(self, request, context):
+        resp = self.reader.country(request.ip)
         return geoip_pb2.GeoIpResponse(ip=request.ip,
-                                       country=resp.country.iso_code,
-                                       city=resp.city.name,
-                                       latitude=resp.location.latitude,
-                                       longitude=resp.location.longitude)
+                                       country=resp.country.iso_code)
             
 
 async def serve() -> None:

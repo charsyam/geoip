@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 service GeoIpService {
-    rpc getCity(GeoIpRequest) returns (GeoIpResponse) {}
+    rpc getCountry(GeoIpRequest) returns (GeoIpResponse) {}
 }
 
 message GeoIpRequest {
@@ -11,7 +11,4 @@ message GeoIpRequest {
 message GeoIpResponse {
     string ip = 1;
     string country = 2;
-    string city = 3;
-    float latitude = 4;
-    float longitude = 5;
 }

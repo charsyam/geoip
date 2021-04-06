@@ -14,8 +14,8 @@ class GeoIpServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.getCity = channel.unary_unary(
-                '/GeoIpService/getCity',
+        self.getCountry = channel.unary_unary(
+                '/GeoIpService/getCountry',
                 request_serializer=geoip__pb2.GeoIpRequest.SerializeToString,
                 response_deserializer=geoip__pb2.GeoIpResponse.FromString,
                 )
@@ -24,7 +24,7 @@ class GeoIpServiceStub(object):
 class GeoIpServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def getCity(self, request, context):
+    def getCountry(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -33,8 +33,8 @@ class GeoIpServiceServicer(object):
 
 def add_GeoIpServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'getCity': grpc.unary_unary_rpc_method_handler(
-                    servicer.getCity,
+            'getCountry': grpc.unary_unary_rpc_method_handler(
+                    servicer.getCountry,
                     request_deserializer=geoip__pb2.GeoIpRequest.FromString,
                     response_serializer=geoip__pb2.GeoIpResponse.SerializeToString,
             ),
@@ -49,7 +49,7 @@ class GeoIpService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def getCity(request,
+    def getCountry(request,
             target,
             options=(),
             channel_credentials=None,
@@ -59,7 +59,7 @@ class GeoIpService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/GeoIpService/getCity',
+        return grpc.experimental.unary_unary(request, target, '/GeoIpService/getCountry',
             geoip__pb2.GeoIpRequest.SerializeToString,
             geoip__pb2.GeoIpResponse.FromString,
             options, channel_credentials,
