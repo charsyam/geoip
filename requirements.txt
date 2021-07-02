@@ -4,3 +4,4 @@ grpcio==1.36.1
 grpcio-tools==1.36.1
 prometheus-fastapi-instrumentator==5.7.1
 http3==0.6.7
+uvicorn==0.14.0

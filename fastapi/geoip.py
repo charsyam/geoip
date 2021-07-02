@@ -12,7 +12,7 @@ import geoip2
 
 from prometheus_fastapi_instrumentator import Instrumentator, metrics
 
-reader = geoip2.database.Reader('../mmdb/GeoLite2-Country.mmdb')
+reader = geoip2.database.Reader('./GeoLite2-Country.mmdb')
 app = FastAPI()
 
 Instrumentator().instrument(app).expose(app)
