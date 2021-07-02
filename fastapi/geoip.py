@@ -63,7 +63,7 @@ async def unicorn_exception_handler(request: Request, exc: UnicornException):
     )
 
 
-@app.get("/geoip/{ip}", response_model=CountryEntity)
+@app.get("/api/v1/geoip/{ip}", response_model=CountryEntity)
 async def read_item(ip: str):
     try:
         resp = reader.country(ip)
