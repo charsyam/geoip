@@ -53,6 +53,8 @@ instrumentator.add(
         metric_namespace="namespace",
         metric_subsystem="subsystem",
     )
+).add(
+        metrics.latency()
 )
 
 @app.exception_handler(UnicornException)
