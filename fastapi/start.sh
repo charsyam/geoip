@@ -1,3 +1,6 @@
 #!/bin/sh
 
-uvicorn geoip:app --reload --host 0.0.0.0
+HOST=`echo $1 | cut -d ":" -f 1`
+PORT=`echo $1 | cut -d ":" -f 2`
+export APP_ENDPOINT=$1
+uvicorn main:app --reload --host $HOST --port $PORT
