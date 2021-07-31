@@ -8,6 +8,7 @@ class BaseEntity(BaseModel):
 class CountryEntity(BaseEntity):
     ip: str
     country: str
+    self: str
 
 
 class CityEntity(BaseEntity):
