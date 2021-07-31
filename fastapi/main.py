@@ -79,7 +79,7 @@ async def unicorn_exception_handler(request: Request, exc: UnicornException):
     )
 
 
-@app.get("/health_check"):
+@app.get("/health_check")
 async def health_check():
     return "ok"
 
