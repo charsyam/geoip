@@ -9,8 +9,23 @@ from models import CountryEntity
 
 import geoip2.database
 import geoip2
+import socket
 
 from prometheus_fastapi_instrumentator import Instrumentator, metrics
+
+
+self_ip = socket.gethostbyname(socket.gethostname())
+
+
+def get_local_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    self_ip = s.getsockname()[0]
+    s.close()
+    return self_ip
+
+
+self_ip = get_local_ip()
 
 reader = geoip2.database.Reader('./GeoLite2-Country.mmdb')
 app = FastAPI()
@@ -72,7 +87,7 @@ async def read_item(ip: str):
         if resp.country.iso_code:
             iso_code = resp.country.iso_code
 
-        return {"ip": ip, "country": iso_code}
+        return {"ip": ip, "country": iso_code, "self": self_ip}
     except geoip2.errors.AddressNotFoundError as e:
         raise UnicornException(status=404, code=-20000, message=str(e))
     except Exception as e:
