@@ -1,7 +1,9 @@
 from pydantic import BaseModel
 
-class BaseEntity:
+
+class BaseEntity(BaseModel):
     pass
+
 
 class CountryEntity(BaseEntity):
     ip: str
