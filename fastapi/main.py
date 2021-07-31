@@ -79,6 +79,11 @@ async def unicorn_exception_handler(request: Request, exc: UnicornException):
     )
 
 
+@app.get("/health_check"):
+async def health_check():
+    return "ok"
+
+
 @app.get("/api/v1/geoip/{ip}", response_model=CountryEntity)
 async def read_item(ip: str):
     try:
@@ -89,6 +94,6 @@ async def read_item(ip: str):
 
         return {"ip": ip, "country": iso_code, "self": self_ip}
     except geoip2.errors.AddressNotFoundError as e:
-        raise UnicornException(status=404, code=-20000, message=str(e))
+        raise UnicornException(status=404, code=-20001, message=str(e))
     except Exception as e:
         raise UnicornException(status=400, code=-20000, message=str(e))
