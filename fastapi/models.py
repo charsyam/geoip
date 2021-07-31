@@ -1,16 +1,14 @@
 from pydantic import BaseModel
 
+class BaseEntity:
+    pass
 
-class CodeEntity(BaseModel):
-    code: int
-
-
-class CountryEntity(CodeEntity):
+class CountryEntity(BaseEntity):
     ip: str
     country: str
 
 
-class CityEntity(CountryEntity):
+class CityEntity(BaseEntity):
     city: str
     latitude: float
     longitude: float
