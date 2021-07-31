@@ -72,8 +72,7 @@ async def read_item(ip: str):
         if resp.country.iso_code:
             iso_code = resp.country.iso_code
 
-        return {"code": 0,  "ip": ip,
-                "country": iso_code}
+        return {"ip": ip, "country": iso_code}
     except geoip2.errors.AddressNotFoundError as e:
         raise UnicornException(status=404, code=-20000, message=str(e))
     except Exception as e:
