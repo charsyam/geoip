@@ -9,6 +9,7 @@ class CountryEntity(BaseEntity):
     ip: str
     country: str
     self: str
+    ctype: str
 
 
 class CityEntity(BaseEntity):
