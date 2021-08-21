@@ -12,9 +12,11 @@ import geoip2
 import socket
 
 from prometheus_fastapi_instrumentator import Instrumentator, metrics
+from localcache import LocalCache
 
 
 self_ip = socket.gethostbyname(socket.gethostname())
+lc = LocalCache()
 
 
 def get_local_ip():
@@ -87,12 +89,17 @@ async def health_check():
 @app.get("/api/v1/geoip/{ip}", response_model=CountryEntity)
 async def read_item(ip: str):
     try:
-        resp = reader.country(ip)
-        iso_code = ""
-        if resp.country.iso_code:
-            iso_code = resp.country.iso_code
+        resp = lc.get(ip) 
+        if not resp:
+            resp = reader.country(ip)
+            iso_code = ""
+            if resp.country.iso_code:
+                iso_code = resp.country.iso_code
 
-        return {"ip": ip, "country": iso_code, "self": self_ip, "ctype": "green"}
+            resp = {"ip": ip, "country": iso_code, "self": self_ip, "ctype": "green"}
+            lc.put(ip, resp, 120)
+
+        return resp
     except geoip2.errors.AddressNotFoundError as e:
         raise UnicornException(status=404, code=-20001, message=str(e))
     except Exception as e:
